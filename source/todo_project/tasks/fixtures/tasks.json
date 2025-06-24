@@ -1,0 +1,20 @@
+[
+{
+  "model": "tasks.task",
+  "pk": 1,
+  "fields": {
+    "description": "Добавить comit",
+    "status": "new",
+    "due_date": "2025-06-24"
+  }
+},
+{
+  "model": "tasks.task",
+  "pk": 2,
+  "fields": {
+    "description": "Сделать фикстуру",
+    "status": "in_progress",
+    "due_date": null
+  }
+}
+]
