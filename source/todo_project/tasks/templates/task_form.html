@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>Добавить новую задачу</h2>
+  <form method="post">
+    {% csrf_token %}
+    <div class="mb-3">
+      {{ form.description.label_tag }}
+      {{ form.description }}
+    </div>
+    <div class="mb-3">
+      {{ form.status.label_tag }}
+      {{ form.status }}
+    </div>
+    <div class="mb-3">
+      {{ form.due_date.label_tag }}
+      {{ form.due_date }}
+      <small>Дата в формате YYYY-MM-DD</small>
+    </div>
+    <button type="submit" class="btn btn-primary">Добавить</button>
+  </form>
+{% endblock %}
