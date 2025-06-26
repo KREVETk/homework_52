@@ -9,6 +9,10 @@ class Task(models.Model):
     ]
 
     description = models.TextField(verbose_name='Описание задачи')
+    details = models.TextField(
+        blank=True,
+        verbose_name='Подробное описание'
+    )
     status = models.CharField(
         max_length=20,
         choices=STATUS_CHOICES,
