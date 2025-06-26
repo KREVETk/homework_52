@@ -4,6 +4,7 @@
   "pk": 1,
   "fields": {
     "description": "Добавить comit",
+    "details": "",
     "status": "new",
     "due_date": "2025-06-24"
   }
@@ -13,6 +14,7 @@
   "pk": 2,
   "fields": {
     "description": "Сделать фикстуру",
+    "details": "",
     "status": "in_progress",
     "due_date": null
   }
@@ -22,8 +24,19 @@
   "pk": 3,
   "fields": {
     "description": "Задача создана через админпанель",
+    "details": "",
     "status": "done",
     "due_date": "2025-06-24"
+  }
+},
+{
+  "model": "tasks.task",
+  "pk": 4,
+  "fields": {
+    "description": "Задача",
+    "details": "Задача4",
+    "status": "new",
+    "due_date": null
   }
 }
 ]
