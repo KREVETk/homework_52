@@ -1,17 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Детали задачи</title>
-</head>
-<body>
-    <h1>{{ task.description }}</h1>
-    <p><strong>Статус:</strong> {{ task.get_status_display }}</p>
-    <p><strong>Дата выполнения:</strong> {{ task.due_date }}</p>
+{% extends 'base.html' %}
 
-    <h3>Подробное описание:</h3>
-    <pre style="white-space: pre-wrap;">{{ task.details }}</pre>
+{% block title %}Детали задачи{% endblock %}
 
-    <p><a href="{% url 'task_list' %}" style="text-decoration: none;">← Назад к списку</a></p>
-</body>
-</html>
+{% block content %}
+<h1>{{ task.description }}</h1>
+<p><strong>Статус:</strong> {{ task.get_status_display }}</p>
+<p><strong>Дата выполнения:</strong> {{ task.due_date }}</p>
+
+<h3>Подробное описание:</h3>
+<pre style="white-space: pre-wrap;">{{ task.details }}</pre>
+
+<p><a href="{% url 'task_list' %}" style="text-decoration: none;">← Назад к списку</a></p>
+{% endblock %}
