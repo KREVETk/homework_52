@@ -21,7 +21,11 @@
         <tbody>
             {% for task in tasks %}
             <tr>
-                <td>{{ task.description }}</td>
+                <td>
+                    <a href="{% url 'task_detail' task.id %}" style="text-decoration: none;">
+                        {{ task.description }}
+                    </a>
+                </td>
                 <td>{{ task.get_status_display }}</td>
                 <td>{{ task.due_date|default:"—" }}</td>
                 <td>
