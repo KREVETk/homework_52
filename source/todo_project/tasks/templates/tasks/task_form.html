@@ -1,23 +1,11 @@
 {% extends 'base.html' %}
 
-{% block title %}Добавить задачу{% endblock %}
-
 {% block content %}
-<h2>Добавить новую задачу</h2>
-<form method="post">
+  <h2>{% if form.instance.pk %}Редактировать{% else %}Добавить{% endif %} задачу</h2>
+  <form method="post">
     {% csrf_token %}
-    <div class="mb-3">
-        {{ form.description.label_tag }}
-        {{ form.description }}
-    </div>
-    <div class="mb-3">
-        {{ form.status.label_tag }}
-        {{ form.status }}
-    </div>
-    <div class="mb-3">
-        {{ form.due_date.label_tag }}
-        {{ form.due_date }}
-    </div>
-    <button type="submit" class="btn btn-primary">Добавить</button>
-</form>
+    {% include "tasks/task_form_fields.html" %}
+    <button type="submit">Сохранить</button>
+    <a href="{% url 'task_list' %}" class="text-decoration-none">Отмена</a>
+  </form>
 {% endblock %}
