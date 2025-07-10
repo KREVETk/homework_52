@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block title %}Список задач{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+  <h2 class="mb-4">Список задач</h2>
+
+  {% if issues %}
+    <div class="list-group">
+      {% for issue in issues %}
+        <a href="{% url 'issue_detail' issue.pk %}" class="list-group-item list-group-item-action">
+          <strong>{{ issue.summary }}</strong> —
+          {{ issue.status.name }} | {{ issue.created_at|date:"d.m.Y H:i" }}
+        </a>
+      {% endfor %}
+    </div>
+  {% else %}
+    <p>Пока задач нет.</p>
+  {% endif %}
+
+  <a href="{% url 'issue_add' %}" class="btn btn-success mt-3">Добавить задачу</a>
+</div>
+{% endblock %}
