@@ -31,11 +31,12 @@ class Issue(models.Model):
         on_delete=models.PROTECT,
         verbose_name='Статус'
     )
-    type = models.ForeignKey(
+    type_temp = models.ManyToManyField(
         Type,
-        on_delete=models.PROTECT,
-        verbose_name='Тип'
+        verbose_name='Тип (новый)',
+        related_name='issues_temp'
     )
+
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Создано')
     updated_at = models.DateTimeField(auto_now=True, verbose_name='Обновлено')
 
