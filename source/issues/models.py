@@ -23,6 +23,16 @@ class Type(models.Model):
         return self.name
 
 
+class Project(models.Model):
+    start_date = models.DateField()
+    end_date = models.DateField(null=True, blank=True)
+    name = models.CharField(max_length=255)
+    description = models.TextField()
+
+    def __str__(self):
+        return self.name
+
+
 class Issue(models.Model):
     summary = models.CharField(max_length=200, verbose_name='Краткое описание')
     description = models.TextField(blank=True, verbose_name='Полное описание')
@@ -35,6 +45,11 @@ class Issue(models.Model):
         Type,
         verbose_name='Тип (новый)',
         related_name='issues_temp'
+    )
+    project = models.ForeignKey(
+        Project,
+        on_delete=models.CASCADE,
+        related_name='issues'
     )
 
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Создано')
