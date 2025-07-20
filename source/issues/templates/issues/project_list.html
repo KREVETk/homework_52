@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}Список проектов{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+  <h2 class="mb-4">Список проектов</h2>
+
+  {% if projects %}
+    <div class="list-group">
+      {% for project in projects %}
+        <a href="{% url 'project_detail' project.pk %}" class="list-group-item list-group-item-action">
+          <strong>{{ project.name }}</strong> — создан {{ project.created_at|date:"d.m.Y" }}
+        </a>
+      {% endfor %}
+    </div>
+  {% else %}
+    <p>Проектов пока нет.</p>
+  {% endif %}
+
+  <a href="{% url 'project_add' %}" class="btn btn-primary mt-3">Добавить проект</a>
+</div>
+{% endblock %}

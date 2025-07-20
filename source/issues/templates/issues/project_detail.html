@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ project.name }}{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+  <h2>{{ project.name }}</h2>
+
+  <p><strong>Создано:</strong> {{ project.created_at|date:"d.m.Y H:i" }}</p>
+  <p><strong>Обновлено:</strong> {{ project.updated_at|date:"d.m.Y H:i" }}</p>
+
+  {% if project.description %}
+    <p class="mt-3"><strong>Описание:</strong><br>{{ project.description }}</p>
+  {% endif %}
+
+  <a href="{% url 'project_edit' project.pk %}" class="btn btn-primary">Изменить</a>
+  <a href="{% url 'project_delete' project.pk %}" class="btn btn-danger ms-2">Удалить</a>
+  <a href="{% url 'project_list' %}" class="btn btn-secondary ms-2">Назад</a>
+</div>
+{% endblock %}
