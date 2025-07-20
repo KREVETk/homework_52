@@ -9,7 +9,7 @@ from .forms import IssueForm, ProjectForm
 
 class ProjectListView(ListView):
     model = Project
-    template_name = 'projects/project_list.html'
+    template_name = 'issues/project_list.html'
     context_object_name = 'projects'
     paginate_by = 5
 
@@ -32,7 +32,7 @@ class ProjectListView(ListView):
 
 class ProjectDetailView(DetailView):
     model = Project
-    template_name = 'projects/project_detail.html'
+    template_name = 'issues/project_detail.html'
     context_object_name = 'project'
 
     def get_context_data(self, **kwargs):
@@ -44,7 +44,7 @@ class ProjectDetailView(DetailView):
 class ProjectCreateView(CreateView):
     model = Project
     form_class = ProjectForm
-    template_name = 'projects/project_form.html'
+    template_name = 'issues/project_form.html'
     success_url = reverse_lazy('project_list')
 
     def get_context_data(self, **kwargs):
@@ -57,7 +57,7 @@ class ProjectCreateView(CreateView):
 class ProjectUpdateView(UpdateView):
     model = Project
     form_class = ProjectForm
-    template_name = 'projects/project_form.html'
+    template_name = 'issues/project_form.html'
     success_url = reverse_lazy('project_list')
 
     def get_context_data(self, **kwargs):
@@ -70,7 +70,7 @@ class ProjectUpdateView(UpdateView):
 
 class ProjectDeleteView(DeleteView):
     model = Project
-    template_name = 'projects/project_confirm_delete.html'
+    template_name = 'issues/project_confirm_delete.html'
     success_url = reverse_lazy('project_list')
 
     def get_context_data(self, **kwargs):
