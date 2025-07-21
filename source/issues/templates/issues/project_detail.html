@@ -16,5 +16,30 @@
   <a href="{% url 'project_edit' project.pk %}" class="btn btn-primary">Изменить</a>
   <a href="{% url 'project_delete' project.pk %}" class="btn btn-danger ms-2">Удалить</a>
   <a href="{% url 'project_list' %}" class="btn btn-secondary ms-2">Назад</a>
+
+  <hr class="my-4">
+
+  <h3>Задачи проекта</h3>
+
+  {% if issues %}
+    <ul class="list-group">
+      {% for issue in issues %}
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          <div>
+            <strong>{{ issue.summary }}</strong> ({{ issue.status.name }})
+          </div>
+          <div>
+            <a href="{% url 'issue_detail' issue.pk %}" class="btn btn-sm btn-outline-primary">Просмотр</a>
+            <a href="{% url 'issue_edit' issue.pk %}" class="btn btn-sm btn-outline-secondary ms-1">Изменить</a>
+            <a href="{% url 'issue_delete' issue.pk %}" class="btn btn-sm btn-outline-danger ms-1">Удалить</a>
+          </div>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>Задач пока нет.</p>
+  {% endif %}
+
+  <a href="{% url 'issue_add' project.pk %}" class="btn btn-success mt-3">Добавить задачу</a>
 </div>
 {% endblock %}
