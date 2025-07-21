@@ -3,6 +3,7 @@ from django.views.generic import (
     CreateView, UpdateView, DeleteView, DetailView, ListView)
 from django.shortcuts import get_object_or_404
 from django.db.models import Q
+from django.http import Http404
 from .models import Issue, Project
 from .forms import IssueForm, ProjectForm
 
@@ -37,7 +38,7 @@ class ProjectDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['issues'] = self.object.issues.all()
+        context['issues'] = self.object.issues.filter(is_deleted=False)
         return context
 
 
@@ -88,17 +89,32 @@ class IssueListView(ListView):
     template_name = 'issues/project_list.html'
     context_object_name = 'issues'
 
+    def get_queryset(self):
+        return Issue.objects.filter(is_deleted=False)
+
 
 class IssueDetailView(DetailView):
     model = Issue
     template_name = 'issues/project_detail.html'
     context_object_name = 'issue'
 
+    def get_object(self, queryset=None):
+        obj = super().get_object(queryset)
+        if obj.is_deleted:
+            raise Http404("Задача удалена.")
+        return obj
+
 
 class IssueDeleteView(DeleteView):
     model = Issue
     template_name = 'issues/confirm_delete.html'
     success_url = reverse_lazy('project_list')
+
+    def delete(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        self.object.is_deleted = True
+        self.object.save()
+        return super().form_valid(form=None)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
