@@ -52,6 +52,8 @@ class Issue(models.Model):
         related_name='issues'
     )
 
+    is_deleted = models.BooleanField(default=False)
+
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Создано')
     updated_at = models.DateTimeField(auto_now=True, verbose_name='Обновлено')
 

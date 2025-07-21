@@ -6,7 +6,13 @@
 <div class="container mt-4">
   <h2 class="mb-4">Список проектов</h2>
 
-  {% if projects %}
+  <form method="get" class="mb-3">
+    <input type="text" name="q" class="form-control" placeholder="Поиск по проектам" value="{{ query }}">
+  </form>
+
+  {% if no_results %}
+    <p>Проекты не найдены.</p>
+  {% elif projects %}
     <div class="list-group">
       {% for project in projects %}
         <a href="{% url 'project_detail' project.pk %}" class="list-group-item list-group-item-action">
