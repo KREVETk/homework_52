@@ -135,9 +135,7 @@ class IssueCreateInProjectView(CreateView):
 
     def form_valid(self, form):
         form.instance.project = self.project
-        response = super().form_valid(form)
-        form.instance.type_temp.set(form.cleaned_data['type_temp'])
-        return response
+        return super().form_valid(form)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -156,9 +154,7 @@ class IssueUpdateView(UpdateView):
     template_name = 'issues/project_form.html'
 
     def form_valid(self, form):
-        response = super().form_valid(form)
-        form.instance.type_temp.set(form.cleaned_data['type_temp'])
-        return response
+        return super().form_valid(form)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

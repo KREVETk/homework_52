@@ -17,7 +17,7 @@ class IssueForm(forms.ModelForm):
     types = forms.ModelMultipleChoiceField(
         queryset=Type.objects.all(),
         label="Тип задачи",
-        widget=forms.CheckboxSelectMultiple(attrs={"class": "form-check-input"})
+        widget=forms.CheckboxSelectMultiple()
     )
 
     class Meta:
