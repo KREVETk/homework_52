@@ -1,1 +1,332 @@
-[{"model": "issues.status", "pk": 1, "fields": {"name": "New"}}, {"model": "issues.status", "pk": 2, "fields": {"name": "In Progress"}}, {"model": "issues.status", "pk": 3, "fields": {"name": "Done"}}, {"model": "issues.type", "pk": 1, "fields": {"name": "Task"}}, {"model": "issues.type", "pk": 2, "fields": {"name": "Bug"}}, {"model": "issues.type", "pk": 3, "fields": {"name": "Enhancement"}}, {"model": "issues.issue", "pk": 1, "fields": {"summary": "Задача1", "description": "Задача1", "status": 1, "type": 1, "created_at": "2025-07-10T18:17:31.266Z", "updated_at": "2025-07-10T18:17:31.266Z"}}, {"model": "issues.issue", "pk": 2, "fields": {"summary": "Задача2", "description": "Задача2", "status": 2, "type": 1, "created_at": "2025-07-10T18:17:52.917Z", "updated_at": "2025-07-10T18:17:52.917Z"}}, {"model": "issues.issue", "pk": 3, "fields": {"summary": "Ошибка1", "description": "Ошибка1", "status": 3, "type": 2, "created_at": "2025-07-10T18:18:11.987Z", "updated_at": "2025-07-10T18:18:11.987Z"}}, {"model": "issues.issue", "pk": 4, "fields": {"summary": "Ошибка2", "description": "Ошибка2", "status": 2, "type": 2, "created_at": "2025-07-10T18:18:32.399Z", "updated_at": "2025-07-10T18:18:32.399Z"}}, {"model": "issues.issue", "pk": 5, "fields": {"summary": "Улучшение1", "description": "Улучшение1", "status": 2, "type": 3, "created_at": "2025-07-10T18:19:33.824Z", "updated_at": "2025-07-10T18:19:33.824Z"}}, {"model": "issues.issue", "pk": 6, "fields": {"summary": "Улучшение2", "description": "Улучшение2", "status": 2, "type": 3, "created_at": "2025-07-10T18:19:55.417Z", "updated_at": "2025-07-10T18:19:55.417Z"}}]
+[
+{
+  "model": "issues.issue",
+  "pk": 7,
+  "fields": {
+    "summary": "Задача 1",
+    "description": "Пример описания",
+    "status": 3,
+    "project": 1,
+    "is_deleted": false,
+    "created_at": "2025-07-24T14:29:11.951Z",
+    "updated_at": "2025-07-24T14:29:11.952Z",
+    "type_temp": [
+      3
+    ]
+  }
+},
+{
+  "model": "issues.issue",
+  "pk": 8,
+  "fields": {
+    "summary": "Задача 2",
+    "description": "Пример описания",
+    "status": 2,
+    "project": 1,
+    "is_deleted": false,
+    "created_at": "2025-07-24T14:29:11.959Z",
+    "updated_at": "2025-07-24T14:29:11.959Z",
+    "type_temp": [
+      1,
+      3
+    ]
+  }
+},
+{
+  "model": "issues.issue",
+  "pk": 9,
+  "fields": {
+    "summary": "Задача 3",
+    "description": "Пример описания",
+    "status": 1,
+    "project": 1,
+    "is_deleted": false,
+    "created_at": "2025-07-24T14:29:11.961Z",
+    "updated_at": "2025-07-24T14:29:11.961Z",
+    "type_temp": [
+      1,
+      2
+    ]
+  }
+},
+{
+  "model": "issues.issue",
+  "pk": 10,
+  "fields": {
+    "summary": "Задача 4",
+    "description": "Пример описания",
+    "status": 1,
+    "project": 1,
+    "is_deleted": false,
+    "created_at": "2025-07-24T14:29:11.962Z",
+    "updated_at": "2025-07-24T14:29:11.962Z",
+    "type_temp": [
+      1,
+      3
+    ]
+  }
+},
+{
+  "model": "issues.issue",
+  "pk": 11,
+  "fields": {
+    "summary": "Задача 5",
+    "description": "Пример описания",
+    "status": 2,
+    "project": 1,
+    "is_deleted": false,
+    "created_at": "2025-07-24T14:29:11.964Z",
+    "updated_at": "2025-07-24T14:29:11.964Z",
+    "type_temp": [
+      1,
+      3
+    ]
+  }
+},
+{
+  "model": "issues.issue",
+  "pk": 12,
+  "fields": {
+    "summary": "Задача 6",
+    "description": "Пример описания",
+    "status": 3,
+    "project": 1,
+    "is_deleted": false,
+    "created_at": "2025-07-24T14:29:11.965Z",
+    "updated_at": "2025-07-24T14:29:11.965Z",
+    "type_temp": [
+      3
+    ]
+  }
+},
+{
+  "model": "issues.issue",
+  "pk": 13,
+  "fields": {
+    "summary": "Задача 7",
+    "description": "Пример описания",
+    "status": 2,
+    "project": 1,
+    "is_deleted": false,
+    "created_at": "2025-07-24T14:29:11.967Z",
+    "updated_at": "2025-07-24T14:29:11.967Z",
+    "type_temp": [
+      1,
+      2
+    ]
+  }
+},
+{
+  "model": "issues.issue",
+  "pk": 14,
+  "fields": {
+    "summary": "Задача 8",
+    "description": "Пример описания",
+    "status": 2,
+    "project": 1,
+    "is_deleted": false,
+    "created_at": "2025-07-24T14:29:11.968Z",
+    "updated_at": "2025-07-24T14:29:11.968Z",
+    "type_temp": [
+      1
+    ]
+  }
+},
+{
+  "model": "issues.issue",
+  "pk": 15,
+  "fields": {
+    "summary": "Задача 9",
+    "description": "Пример описания",
+    "status": 2,
+    "project": 1,
+    "is_deleted": false,
+    "created_at": "2025-07-24T14:29:11.969Z",
+    "updated_at": "2025-07-24T14:29:11.969Z",
+    "type_temp": [
+      3
+    ]
+  }
+},
+{
+  "model": "issues.issue",
+  "pk": 16,
+  "fields": {
+    "summary": "Задача 10",
+    "description": "Пример описания",
+    "status": 1,
+    "project": 1,
+    "is_deleted": false,
+    "created_at": "2025-07-24T14:29:11.970Z",
+    "updated_at": "2025-07-24T14:29:11.970Z",
+    "type_temp": [
+      3
+    ]
+  }
+},
+{
+  "model": "issues.issue",
+  "pk": 17,
+  "fields": {
+    "summary": "Задача 11",
+    "description": "Пример описания",
+    "status": 1,
+    "project": 1,
+    "is_deleted": false,
+    "created_at": "2025-07-24T14:29:11.971Z",
+    "updated_at": "2025-07-24T14:29:11.971Z",
+    "type_temp": [
+      2
+    ]
+  }
+},
+{
+  "model": "issues.issue",
+  "pk": 18,
+  "fields": {
+    "summary": "Задача 12",
+    "description": "Пример описания",
+    "status": 2,
+    "project": 1,
+    "is_deleted": false,
+    "created_at": "2025-07-24T14:29:11.972Z",
+    "updated_at": "2025-07-24T14:29:11.972Z",
+    "type_temp": [
+      3
+    ]
+  }
+},
+{
+  "model": "issues.issue",
+  "pk": 19,
+  "fields": {
+    "summary": "Задача 13",
+    "description": "Пример описания",
+    "status": 2,
+    "project": 1,
+    "is_deleted": false,
+    "created_at": "2025-07-24T14:29:11.973Z",
+    "updated_at": "2025-07-24T14:29:11.973Z",
+    "type_temp": [
+      2,
+      3
+    ]
+  }
+},
+{
+  "model": "issues.issue",
+  "pk": 20,
+  "fields": {
+    "summary": "Задача 14",
+    "description": "Пример описания",
+    "status": 3,
+    "project": 1,
+    "is_deleted": false,
+    "created_at": "2025-07-24T14:29:11.974Z",
+    "updated_at": "2025-07-24T14:29:11.974Z",
+    "type_temp": [
+      1,
+      2
+    ]
+  }
+},
+{
+  "model": "issues.issue",
+  "pk": 21,
+  "fields": {
+    "summary": "Задача 15",
+    "description": "Пример описания",
+    "status": 3,
+    "project": 1,
+    "is_deleted": false,
+    "created_at": "2025-07-24T14:29:11.975Z",
+    "updated_at": "2025-07-24T14:29:11.975Z",
+    "type_temp": [
+      2,
+      3
+    ]
+  }
+},
+{
+  "model": "issues.issue",
+  "pk": 22,
+  "fields": {
+    "summary": "Задача 16",
+    "description": "Пример описания",
+    "status": 3,
+    "project": 1,
+    "is_deleted": false,
+    "created_at": "2025-07-24T14:29:11.976Z",
+    "updated_at": "2025-07-24T14:29:11.976Z",
+    "type_temp": [
+      3
+    ]
+  }
+},
+{
+  "model": "issues.issue",
+  "pk": 23,
+  "fields": {
+    "summary": "Задача 17",
+    "description": "Пример описания",
+    "status": 3,
+    "project": 1,
+    "is_deleted": false,
+    "created_at": "2025-07-24T14:29:11.977Z",
+    "updated_at": "2025-07-24T14:29:11.977Z",
+    "type_temp": [
+      2
+    ]
+  }
+},
+{
+  "model": "issues.issue",
+  "pk": 24,
+  "fields": {
+    "summary": "Задача 18",
+    "description": "Пример описания",
+    "status": 2,
+    "project": 1,
+    "is_deleted": false,
+    "created_at": "2025-07-24T14:29:11.978Z",
+    "updated_at": "2025-07-24T14:29:11.978Z",
+    "type_temp": [
+      2,
+      3
+    ]
+  }
+},
+{
+  "model": "issues.issue",
+  "pk": 25,
+  "fields": {
+    "summary": "Задача 19",
+    "description": "Пример описания",
+    "status": 1,
+    "project": 1,
+    "is_deleted": false,
+    "created_at": "2025-07-24T14:29:11.979Z",
+    "updated_at": "2025-07-24T14:29:11.979Z",
+    "type_temp": [
+      1,
+      2
+    ]
+  }
+},
+{
+  "model": "issues.issue",
+  "pk": 26,
+  "fields": {
+    "summary": "Задача 20",
+    "description": "Пример описания",
+    "status": 2,
+    "project": 1,
+    "is_deleted": false,
+    "created_at": "2025-07-24T14:29:11.980Z",
+    "updated_at": "2025-07-24T14:29:11.980Z",
+    "type_temp": [
+      1
+    ]
+  }
+}
+]
