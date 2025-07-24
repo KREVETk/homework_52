@@ -1,5 +1,7 @@
 from django import forms
 from .models import Issue, Status, Type, Project
+from .validators import validate_summary_length, validate_forbidden_words
+
 
 class IssueForm(forms.ModelForm):
     project = forms.ModelChoiceField(
@@ -20,13 +22,23 @@ class IssueForm(forms.ModelForm):
         widget=forms.CheckboxSelectMultiple()
     )
 
+    summary = forms.CharField(
+        validators=[validate_summary_length],
+        widget=forms.TextInput(attrs={'class': 'form-control'}),
+        label='Краткое описание'
+    )
+
+    description = forms.CharField(
+        required=False,
+        validators=[validate_forbidden_words],
+        widget=forms.Textarea(attrs={'class': 'form-control'}),
+        label='Полное описание'
+    )
+
     class Meta:
         model = Issue
         fields = ['summary', 'description', 'project', 'status', 'types']
-        widgets = {
-            'summary': forms.TextInput(attrs={'class': 'form-control'}),
-            'description': forms.Textarea(attrs={'class': 'form-control'}),
-        }
+
 
 class ProjectForm(forms.ModelForm):
     class Meta:
@@ -38,3 +50,5 @@ class ProjectForm(forms.ModelForm):
             'start_date': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
             'end_date': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
         }
+
+
