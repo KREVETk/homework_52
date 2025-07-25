@@ -4,6 +4,8 @@ from django.views.generic import (
 from django.shortcuts import get_object_or_404
 from django.db.models import Q
 from django.http import Http404
+from django.contrib.auth.mixins import LoginRequiredMixin
+
 from .models import Issue, Project
 from .forms import IssueForm, ProjectForm
 
@@ -42,7 +44,7 @@ class ProjectDetailView(DetailView):
         return context
 
 
-class ProjectCreateView(CreateView):
+class ProjectCreateView(LoginRequiredMixin, CreateView):
     model = Project
     form_class = ProjectForm
     template_name = 'issues/project_form.html'
@@ -55,7 +57,7 @@ class ProjectCreateView(CreateView):
         return context
 
 
-class ProjectUpdateView(UpdateView):
+class ProjectUpdateView(LoginRequiredMixin, UpdateView):
     model = Project
     form_class = ProjectForm
     template_name = 'issues/project_form.html'
@@ -69,7 +71,7 @@ class ProjectUpdateView(UpdateView):
         return context
 
 
-class ProjectDeleteView(DeleteView):
+class ProjectDeleteView(LoginRequiredMixin, DeleteView):
     model = Project
     template_name = 'issues/project_confirm_delete.html'
     success_url = reverse_lazy('project_list')
@@ -105,7 +107,7 @@ class IssueDetailView(DetailView):
         return obj
 
 
-class IssueDeleteView(DeleteView):
+class IssueDeleteView(LoginRequiredMixin, DeleteView):
     model = Issue
     template_name = 'issues/confirm_delete.html'
     success_url = reverse_lazy('project_list')
@@ -124,7 +126,7 @@ class IssueDeleteView(DeleteView):
         return context
 
 
-class IssueCreateInProjectView(CreateView):
+class IssueCreateInProjectView(LoginRequiredMixin, CreateView):
     model = Issue
     form_class = IssueForm
     template_name = 'issues/project_form.html'
@@ -148,7 +150,7 @@ class IssueCreateInProjectView(CreateView):
         return reverse('project_detail', kwargs={'pk': self.project.pk})
 
 
-class IssueUpdateView(UpdateView):
+class IssueUpdateView(LoginRequiredMixin, UpdateView):
     model = Issue
     form_class = IssueForm
     template_name = 'issues/project_form.html'
