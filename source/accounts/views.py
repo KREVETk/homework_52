@@ -16,3 +16,18 @@ def login_view(request):
 def logout_view(request):
     logout(request)
     return redirect('login')
+
+
+class RegisterView(CreateView):
+    model = User
+    form_class = CustomUserCreationForm
+    template_name = "registration/register.html"
+
+    def get_success_url(self):
+        return self.request.GET.get("next") or reverse_lazy("projects")
+
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        login(self.request, self.object)
+        return redirect(self.get_success_url())
+
