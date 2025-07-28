@@ -32,7 +32,8 @@ class Project(models.Model):
     name = models.CharField(max_length=255)
     description = models.TextField()
 
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name='Создано')
+    updated_at = models.DateTimeField(auto_now=True, verbose_name='Обновлено')
 
     members = models.ManyToManyField(
         User,
@@ -47,6 +48,7 @@ class Project(models.Model):
 
     def __str__(self):
         return self.name
+
 
 
 class Issue(models.Model):

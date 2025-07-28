@@ -17,7 +17,7 @@ class IssueForm(forms.ModelForm):
         widget=forms.Select(attrs={"class": "form-control"})
     )
 
-    types = forms.ModelMultipleChoiceField(
+    type_temp = forms.ModelMultipleChoiceField(
         queryset=Type.objects.all(),
         label="Тип задачи",
         widget=forms.CheckboxSelectMultiple()
@@ -38,7 +38,7 @@ class IssueForm(forms.ModelForm):
 
     class Meta:
         model = Issue
-        fields = ['summary', 'description', 'project', 'status', 'types']
+        fields = ['summary', 'description', 'project', 'status', 'type_temp']
 
 
 class ProjectForm(forms.ModelForm):
