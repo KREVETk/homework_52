@@ -8,7 +8,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
 
 from .models import Issue, Project
-from .forms import IssueForm, ProjectForm
+from .forms import IssueForm, ProjectForm, ProjectMembersForm
 
 
 class ProjectListView(ListView):
