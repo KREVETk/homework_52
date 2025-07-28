@@ -6,10 +6,11 @@ from django.db.models import Q
 from django.http import Http404
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
-
 from .models import Issue, Project
 from .forms import IssueForm, ProjectForm, ProjectMembersForm
 
+
+### ===== Project Views =====
 
 class ProjectListView(ListView):
     model = Project
@@ -58,35 +59,51 @@ class ProjectCreateView(LoginRequiredMixin, CreateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['object_type'] = 'Проект'
-        context['cancel_url'] = reverse('project_list')
+        context.update({
+            'object_type': 'Проект',
+            'cancel_url': reverse('project_list')
+        })
         return context
 
 
-class ProjectUpdateView(LoginRequiredMixin, UpdateView):
+class ProjectUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Project
     form_class = ProjectForm
     template_name = 'issues/project_form.html'
     success_url = reverse_lazy('project_list')
 
+    def test_func(self):
+        user = self.request.user
+        project = self.get_object()
+        return user.groups.filter(name='Project Manager').exists() and user in project.members.all()
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['object_type'] = 'Проект'
-        context['object_name'] = self.object.name
-        context['cancel_url'] = reverse('project_detail', args=[self.object.pk])
+        context.update({
+            'object_type': 'Проект',
+            'object_name': self.object.name,
+            'cancel_url': reverse('project_detail', args=[self.object.pk])
+        })
         return context
 
 
-class ProjectDeleteView(LoginRequiredMixin, DeleteView):
+class ProjectDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Project
     template_name = 'issues/project_confirm_delete.html'
     success_url = reverse_lazy('project_list')
 
+    def test_func(self):
+        user = self.request.user
+        project = self.get_object()
+        return user.groups.filter(name='Project Manager').exists() and user in project.members.all()
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['object_type'] = 'Проект'
-        context['object_name'] = self.object.name
-        context['cancel_url'] = reverse('project_detail', args=[self.object.pk])
+        context.update({
+            'object_type': 'Проект',
+            'object_name': self.object.name,
+            'cancel_url': reverse('project_detail', args=[self.object.pk])
+        })
         return context
 
 
@@ -99,20 +116,16 @@ class ProjectMembersUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateVi
         return reverse('project_detail', kwargs={'pk': self.object.pk})
 
     def test_func(self):
-        project = self.get_object()
         user = self.request.user
-
-        if user in project.members.all():
-            if user.groups.filter(name__in=['Project Manager', 'Team Lead']).exists():
-                return True
-        return False
+        project = self.get_object()
+        return user in project.members.all() and user.groups.filter(name__in=['Project Manager', 'Team Lead']).exists()
 
 
-### ============ Issue Views ==========
+### ===== Issue Views =====
 
 class IssueListView(ListView):
     model = Issue
-    template_name = 'issues/project_list.html'
+    template_name = 'issues/issue_list.html'
     context_object_name = 'issues'
 
     def get_queryset(self):
@@ -121,7 +134,7 @@ class IssueListView(ListView):
 
 class IssueDetailView(DetailView):
     model = Issue
-    template_name = 'issues/project_detail.html'
+    template_name = 'issues/issue_detail.html'
     context_object_name = 'issue'
 
     def get_object(self, queryset=None):
@@ -131,10 +144,15 @@ class IssueDetailView(DetailView):
         return obj
 
 
-class IssueDeleteView(LoginRequiredMixin, DeleteView):
+class IssueDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Issue
     template_name = 'issues/confirm_delete.html'
     success_url = reverse_lazy('project_list')
+
+    def test_func(self):
+        user = self.request.user
+        issue = self.get_object()
+        return user.groups.filter(name__in=['Project Manager', 'Team Lead']).exists() and user in issue.project.members.all()
 
     def delete(self, request, *args, **kwargs):
         self.object = self.get_object()
@@ -144,13 +162,15 @@ class IssueDeleteView(LoginRequiredMixin, DeleteView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['object_type'] = 'Задача'
-        context['object_name'] = self.object.summary
-        context['cancel_url'] = reverse('issue_detail', args=[self.object.pk])
+        context.update({
+            'object_type': 'Задача',
+            'object_name': self.object.summary,
+            'cancel_url': reverse('issue_detail', args=[self.object.pk])
+        })
         return context
 
 
-class IssueCreateInProjectView(LoginRequiredMixin, CreateView):
+class IssueCreateInProjectView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     model = Issue
     form_class = IssueForm
     template_name = 'issues/project_form.html'
@@ -159,35 +179,49 @@ class IssueCreateInProjectView(LoginRequiredMixin, CreateView):
         self.project = get_object_or_404(Project, pk=self.kwargs['project_pk'])
         return super().dispatch(request, *args, **kwargs)
 
+    def test_func(self):
+        user = self.request.user
+        return user.groups.filter(name__in=['Project Manager', 'Team Lead', 'Developer']).exists() and user in self.project.members.all()
+
     def form_valid(self, form):
         form.instance.project = self.project
         return super().form_valid(form)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['project'] = self.project
-        context['object_type'] = 'Задача'
-        context['cancel_url'] = reverse('project_detail', args=[self.project.pk])
+        context.update({
+            'project': self.project,
+            'object_type': 'Задача',
+            'cancel_url': reverse('project_detail', args=[self.project.pk])
+        })
         return context
 
     def get_success_url(self):
         return reverse('project_detail', kwargs={'pk': self.project.pk})
 
 
-class IssueUpdateView(LoginRequiredMixin, UpdateView):
+class IssueUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Issue
     form_class = IssueForm
     template_name = 'issues/project_form.html'
+
+    def test_func(self):
+        user = self.request.user
+        issue = self.get_object()
+        return user.groups.filter(name__in=['Project Manager', 'Team Lead', 'Developer']).exists() and user in issue.project.members.all()
 
     def form_valid(self, form):
         return super().form_valid(form)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['object_type'] = 'Задача'
-        context['object_name'] = self.object.summary
-        context['cancel_url'] = reverse('issue_detail', args=[self.object.pk])
+        context.update({
+            'object_type': 'Задача',
+            'object_name': self.object.summary,
+            'cancel_url': reverse('issue_detail', args=[self.object.pk])
+        })
         return context
 
     def get_success_url(self):
         return reverse('issue_detail', kwargs={'pk': self.object.pk})
+
