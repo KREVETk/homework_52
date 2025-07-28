@@ -1,6 +1,7 @@
 from django import forms
 from .models import Issue, Status, Type, Project
 from .validators import validate_summary_length, validate_forbidden_words
+from django.contrib.auth.models import User
 
 
 class IssueForm(forms.ModelForm):
@@ -52,3 +53,14 @@ class ProjectForm(forms.ModelForm):
         }
 
 
+class ProjectMembersForm(forms.ModelForm):
+    members = forms.ModelMultipleChoiceField(
+        queryset=User.objects.all(),
+        widget=forms.CheckboxSelectMultiple,
+        required=False,
+        label='Участники проекта'
+    )
+
+    class Meta:
+        model = Project
+        fields = ['members']

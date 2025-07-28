@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>Вход</h2>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+
+    {% if request.GET.next %}
+      <input type="hidden" name="next" value="{{ request.GET.next }}">
+    {% endif %}
+
+    <button type="submit">Войти</button>
+  </form>
+
+  <p>
+    {% if request.GET.next %}
+      Нет аккаунта?
+      <a href="{% url 'accounts:register' %}?next={{ request.GET.next }}">Зарегистрироваться</a>
+    {% else %}
+      Нет аккаунта?
+      <a href="{% url 'accounts:register' %}">Зарегистрироваться</a>
+    {% endif %}
+  </p>
+{% endblock %}

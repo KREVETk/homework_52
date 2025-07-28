@@ -1,6 +1,10 @@
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import AuthenticationForm
+from django.views.generic import CreateView
+from django.contrib.auth.models import User
+from .forms import CustomUserCreationForm
+
 
 def login_view(request):
     if request.method == 'POST':
@@ -19,15 +23,20 @@ def logout_view(request):
 
 
 class RegisterView(CreateView):
+    template_name = "user_create.html"
     model = User
     form_class = CustomUserCreationForm
-    template_name = "registration/register.html"
 
-    def get_success_url(self):
-        return self.request.GET.get("next") or reverse_lazy("projects")
 
     def form_valid(self, form):
-        response = super().form_valid(form)
-        login(self.request, self.object)
+        user = form.save()
+        login(self.request, user)
         return redirect(self.get_success_url())
 
+    def get_success_url(self):
+        next = self.request.GET.get('next')
+        if not next:
+            next = self.request.POST.get('next')
+        if not next:
+            next = reverse("issues:index")
+        return next

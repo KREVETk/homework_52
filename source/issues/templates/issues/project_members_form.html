@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>Участники проекта: {{ object.name }}</h2>
+
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+
+    <button type="submit" class="btn btn-primary">Сохранить</button>
+    <a href="{% url 'project_detail' object.pk %}" class="btn btn-secondary">Отмена</a>
+  </form>
+{% endblock %}

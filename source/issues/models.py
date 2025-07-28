@@ -1,4 +1,7 @@
 from django.db import models
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
 
 
 class Status(models.Model):
@@ -30,6 +33,17 @@ class Project(models.Model):
     description = models.TextField()
 
     created_at = models.DateTimeField(auto_now_add=True)
+
+    members = models.ManyToManyField(
+        User,
+        related_name='projects',
+        verbose_name='Участники проекта',
+        blank=True,
+    )
+
+    class Meta:
+        verbose_name = 'Проект'
+        verbose_name_plural = 'Проекты'
 
     def __str__(self):
         return self.name

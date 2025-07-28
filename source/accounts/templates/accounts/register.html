@@ -16,10 +16,10 @@
   <p>
     {% if request.GET.next %}
       У вас уже есть аккаунт?
-      <a href="{% url 'login' %}?next={{ request.GET.next }}">Войти</a>
+      <a href="{% url 'accounts:login' %}?next={{ request.GET.next }}">Войти</a>
     {% else %}
       У вас уже есть аккаунт?
-      <a href="{% url 'login' %}">Войти</a>
+      <a href="{% url 'accounts:login' %}">Войти</a>
     {% endif %}
   </p>
 {% endblock %}

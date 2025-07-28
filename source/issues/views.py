@@ -4,7 +4,8 @@ from django.views.generic import (
 from django.shortcuts import get_object_or_404
 from django.db.models import Q
 from django.http import Http404
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+
 
 from .models import Issue, Project
 from .forms import IssueForm, ProjectForm
@@ -50,6 +51,11 @@ class ProjectCreateView(LoginRequiredMixin, CreateView):
     template_name = 'issues/project_form.html'
     success_url = reverse_lazy('project_list')
 
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        self.object.members.add(self.request.user)
+        return response
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['object_type'] = 'Проект'
@@ -82,6 +88,24 @@ class ProjectDeleteView(LoginRequiredMixin, DeleteView):
         context['object_name'] = self.object.name
         context['cancel_url'] = reverse('project_detail', args=[self.object.pk])
         return context
+
+
+class ProjectMembersUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    model = Project
+    form_class = ProjectMembersForm
+    template_name = 'issues/project_members_form.html'
+
+    def get_success_url(self):
+        return reverse('project_detail', kwargs={'pk': self.object.pk})
+
+    def test_func(self):
+        project = self.get_object()
+        user = self.request.user
+
+        if user in project.members.all():
+            if user.groups.filter(name__in=['Project Manager', 'Team Lead']).exists():
+                return True
+        return False
 
 
 ### ============ Issue Views ==========
