@@ -16,7 +16,7 @@
   <p>
     {% if request.GET.next %}
       Нет аккаунта?
-      <a href="{% url 'accounts:register' %}?next={{ request.GET.next }" style="text-decoration: none;}">Зарегистрироваться</a>
+      <a href="{% url 'accounts:register' %}?next={{ request.GET.next }}" style="text-decoration: none;">Зарегистрироваться</a>
     {% else %}
       Нет аккаунта?
       <a href="{% url 'accounts:register' %}" style="text-decoration: none;">Зарегистрироваться</a>

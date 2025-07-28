@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}Задача: {{ issue.summary }}{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+  <h2 class="mb-4">Задача: {{ issue.summary }}</h2>
+
+  <p><strong>Проект:</strong> {{ issue.project.name }}</p>
+  <p><strong>Описание:</strong> {{ issue.description }}</p>
+  <p><strong>Статус:</strong> {{ issue.status }}</p>
+  <p><strong>Типы задач:</strong> {{ issue.types.all|join:", " }}</p>
+
+  <div class="mt-4">
+    <a href="{% url 'issue_update' issue.pk %}" class="btn btn-primary">Редактировать</a>
+    <a href="{% url 'issue_delete' issue.pk %}" class="btn btn-danger ms-2">Удалить</a>
+    <a href="{% url 'project_detail' issue.project.pk %}" class="btn btn-secondary ms-2">Назад к проекту</a>
+  </div>
+</div>
+{% endblock %}
+
