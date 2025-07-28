@@ -5,6 +5,12 @@ from django.contrib.auth.models import User
 
 
 class IssueForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        hide_project = kwargs.pop('hide_project', False)
+        super().__init__(*args, **kwargs)
+        if hide_project:
+            self.fields.pop('project', None)
+
     project = forms.ModelChoiceField(
         queryset=Project.objects.all(),
         label="Проект",
@@ -17,7 +23,7 @@ class IssueForm(forms.ModelForm):
         widget=forms.Select(attrs={"class": "form-control"})
     )
 
-    type_temp = forms.ModelMultipleChoiceField(
+    types = forms.ModelMultipleChoiceField(
         queryset=Type.objects.all(),
         label="Тип задачи",
         widget=forms.CheckboxSelectMultiple()
@@ -38,7 +44,7 @@ class IssueForm(forms.ModelForm):
 
     class Meta:
         model = Issue
-        fields = ['summary', 'description', 'project', 'status', 'type_temp']
+        fields = ['summary', 'description', 'project', 'status', 'types']
 
 
 class ProjectForm(forms.ModelForm):

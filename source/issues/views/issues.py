@@ -1,20 +1,11 @@
 from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView, UpdateView, DeleteView, DetailView, ListView
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, redirect
 from django.http import Http404
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
 from issues.models import Issue, Project
 from issues.forms import IssueForm
-
-
-class IssueListView(ListView):
-    model = Issue
-    template_name = 'issues/issues/issue_list.html'  # папка issues/issues
-    context_object_name = 'issues'
-
-    def get_queryset(self):
-        return Issue.objects.filter(is_deleted=False)
 
 
 class IssueDetailView(DetailView):
@@ -42,11 +33,11 @@ class IssueDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
             and user in issue.project.members.all()
         )
 
-    def delete(self, request, *args, **kwargs):
+    def post(self, request, *args, **kwargs):
         self.object = self.get_object()
         self.object.is_deleted = True
         self.object.save()
-        return super().form_valid(form=None)
+        return redirect(self.get_success_url())
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -73,6 +64,11 @@ class IssueCreateInProjectView(LoginRequiredMixin, UserPassesTestMixin, CreateVi
             user.groups.filter(name__in=['Project Manager', 'Team Lead', 'Developer']).exists()
             and user in self.project.members.all()
         )
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['hide_project'] = True
+        return kwargs
 
     def form_valid(self, form):
         form.instance.project = self.project
